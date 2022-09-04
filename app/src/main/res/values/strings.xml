@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">ChildScore</string>
+    <string name="exerciseWindow">0</string>
+    <string name="answerWindowDefault">Введи ответ</string>
+    <string name="counterPositiveDefault">0</string>
+    <string name="counterNegativeDefault">0</string>
+    <string name="positiveHead">Верно</string>
+    <string name="negativeHead">Неверно</string>
+    <string name="startButton">Ответить</string>
+    <string name="levelDefault">1</string>
+    <string name="numberExerciseDefault">1</string>
+    <string name="levelHead">Уровень:</string>
+    <string name="numberExerciseHead">Пример:</string>
+    <string name="checkBoxHead">X</string>
+    <string name="waveHead">Звук</string>
+    <string name="winWrong">Победа!</string>
+    <string name="newGameButton">Начать сначала</string>
+    <string name="Wrong">Ты проиграл!</string>
+    <string name="clock">Осталось:</string>
+    <string name="timer">Таймер</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="closeFrame">Закрыть</string>
+</resources>

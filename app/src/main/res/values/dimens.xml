@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="exerciseWindow">60sp</dimen>
+<dimen name="answerWindow">40sp</dimen>
+<dimen name="counters">25sp</dimen>
+<dimen name="countersHead">20sp</dimen>
+<dimen name="startButton">16sp</dimen>
+<dimen name="levelExercise">20sp</dimen>
+<dimen name="resultWindow">40sp</dimen>
+    <dimen name="textWinWrong">50sp</dimen>
+    <dimen name="WinWrong">50sp</dimen>
+    <dimen name="clock">25sp</dimen>
+</resources>

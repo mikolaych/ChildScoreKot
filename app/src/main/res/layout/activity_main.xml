@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundBottom"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/exerciseWindow"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/stars"
+        android:gravity="center"
+        android:text="5 + 8"
+        android:textColor="@color/exerciseText"
+        android:textSize="@dimen/exerciseWindow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/answerWindow"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/answerWindow"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="@dimen/answerWindow"
+        android:text="51"
+        android:textColor="@color/textAnswerWindow"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseWindow" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/levelOneStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerWindow" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/levelTwoStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/levelOneStar"
+        app:layout_constraintTop_toTopOf="@+id/levelOneStar" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/levelThreeStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/levelTwoStar"
+        app:layout_constraintTop_toTopOf="@+id/levelTwoStar" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/levelSuperStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/super_star"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/optionsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerWindow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/exerciseNumberHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="@string/numberExerciseHead"
+        android:textSize="@dimen/startButton"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/exerciseNumber"
+        app:layout_constraintEnd_toStartOf="@+id/exerciseNumber"
+        app:layout_constraintTop_toTopOf="@+id/exerciseNumber" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/exerciseNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@color/numberAsk"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/negativeText"
+        android:text="1"
+        android:gravity="center"
+        android:textSize="@dimen/startButton"
+        app:layout_constraintTop_toBottomOf="@+id/answerWindow" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/trueWindowHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/positiveHead"
+        android:textSize="@dimen/startButton"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/levelThreeStar"
+        app:layout_constraintStart_toStartOf="@+id/levelOneStar"
+        app:layout_constraintTop_toBottomOf="@+id/levelTwoStar" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/falseWindowHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/negativeHead"
+        android:textSize="@dimen/startButton"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/exerciseNumber"
+        app:layout_constraintStart_toStartOf="@+id/exerciseNumberHeader"
+        app:layout_constraintTop_toBottomOf="@+id/levelTwoStar" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/positiveWindow"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:text="0"
+        android:textSize="@dimen/clock"
+        android:gravity="center"
+        android:textColor="@color/positiveText"
+        android:background="@drawable/gradient"
+        app:layout_constraintEnd_toEndOf="@+id/trueWindowHeader"
+        app:layout_constraintStart_toStartOf="@+id/trueWindowHeader"
+        app:layout_constraintTop_toBottomOf="@+id/trueWindowHeader" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/negativeWindow"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/gradient2"
+        android:text="0"
+        android:textColor="@color/negativeText"
+        android:textSize="@dimen/clock"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/falseWindowHeader"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="@+id/falseWindowHeader"
+        app:layout_constraintTop_toBottomOf="@+id/falseWindowHeader" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startButton"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/gradient_start"
+        android:gravity="center"
+        android:text="@string/startButton"
+        android:textColor="@color/black"
+        android:textSize="@dimen/clock"
+        app:layout_constraintBottom_toBottomOf="@+id/positiveWindow"
+        app:layout_constraintEnd_toStartOf="@+id/negativeWindow"
+        app:layout_constraintStart_toEndOf="@+id/positiveWindow"
+        app:layout_constraintTop_toTopOf="@+id/positiveWindow" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/soundOnOff"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:button="@drawable/checkbox"
+        android:checked="true"
+        android:elevation="5dp"
+        android:textSize="@dimen/startButton"
+        app:layout_constraintBottom_toBottomOf="@+id/exerciseNumberHeader"
+        app:layout_constraintEnd_toEndOf="@+id/startButton"
+        app:layout_constraintTop_toTopOf="@+id/exerciseNumberHeader" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/optionsButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/options"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/soundOnOff"
+        app:layout_constraintStart_toStartOf="@+id/startButton"
+        app:layout_constraintTop_toTopOf="@+id/soundOnOff" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/countDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Осталось: 12 сек"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/negativeText"
+        android:textSize="@dimen/startButton"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="@+id/startButton"
+        app:layout_constraintStart_toStartOf="@+id/startButton" />
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/startButton" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
