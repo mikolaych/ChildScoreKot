@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.Toast
 import ru.mikolaych.childscorekot.databinding.ActivityMainBinding
 import ru.mikolaych.childscorekot.features.RandomNumbers
+import ru.mikolaych.childscorekot.screens.WinFragment
+import ru.mikolaych.childscorekot.screens.WrongFragment
 
 private var level:Int = 1
 private var result:Int? = null
@@ -99,23 +101,31 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
     }
 
-
     //Контроль уровня
     private fun levelChange(){
         if (exerciseNumber > exerciseLimit ){
             if (positiveScore >= exerciseLimit - errorNumber){
                 level++
             } else level--
-            initialisation(level)
-            exerciseNumber = 1
-            binding.positiveWindow.text = "0"
-            binding.negativeWindow.text = "0"
-            positiveScore = 0
-            negativeScore = 0
-        }
+
+            if (level>0) {
+
+                initialisation(level)
+                exerciseNumber = 1
+                binding.positiveWindow.text = "0"
+                binding.negativeWindow.text = "0"
+                positiveScore = 0
+                negativeScore = 0
+            } else {
+                supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment()).commit()
+                binding.startButton.visibility = View.INVISIBLE
+                timer?.cancel()
+            }
+        } else {
         binding.exerciseNumber.text = exerciseNumber.toString()
         starsControl(level)
         initialisation(level)
+        }
     }
 
     //Звезды
