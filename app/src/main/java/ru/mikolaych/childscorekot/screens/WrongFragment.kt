@@ -5,19 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ru.mikolaych.childscorekot.MainActivity
 import ru.mikolaych.childscorekot.R
+import ru.mikolaych.childscorekot.databinding.FragmentWrongBinding
 
 
 class WrongFragment : Fragment() {
-
+    private lateinit var binding: FragmentWrongBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wrong, container, false)
+    ): View {
+        binding = FragmentWrongBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
+
+
 
 
 }

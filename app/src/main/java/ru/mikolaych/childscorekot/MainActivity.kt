@@ -19,6 +19,7 @@ private var exerciseLimit:Int = 5
 private var positiveScore = 0
 private var negativeScore = 0
 private var errorNumber = 2
+private var timerLevel:Long = 10000
 private var timer: CountDownTimer? = null
 
 
@@ -28,11 +29,43 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        startLevel()
+        restartButton()
+
+    }
+
+    private fun restartButton(){
+        binding.returnButton.setOnClickListener(View.OnClickListener {
+
+            allClear()
+            supportFragmentManager.beginTransaction().remove(WrongFragment()).commit()
+            supportFragmentManager.beginTransaction().remove(WinFragment()).commit()
+            binding.returnButton.visibility = View.INVISIBLE
+            binding.startButton.visibility = View.VISIBLE
+            startLevel()
+        })
+
+    }
+
+    private fun allClear(){
+       level = 1
+       exerciseNumber = 1
+       positiveScore = 0
+       negativeScore = 0
+       timerLevel = 10000
+        binding.positiveWindow.text = positiveScore.toString()
+        binding.negativeWindow.text = positiveScore.toString()
+        binding.exerciseNumber.text = exerciseNumber.toString()
+
+
+    }
+
+    private fun startLevel() {
         starsControl(level)
         initialisation(level)
+        countDown(timerLevel)
         pressStart()
-        countDown(100000)
-
     }
 
     //Инициализация примера
@@ -62,10 +95,11 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 } else {
-                    controlAnswer()
-                    countDown(100000)
-                    levelChange()
                     exerciseNumber++
+                    controlAnswer()
+                    levelChange()
+
+
                 }
 
             })
@@ -77,11 +111,32 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         timer?.cancel()
         timer = object: CountDownTimer(time, 1000){
             override fun onTick(p0: Long) {
-                var time:Long = p0/1000
-                binding.countDown.text = "Осталось ${time.toString()} секунд"
+                val timeLine:Long = p0/1000
+                binding.countDown.text = "Осталось ${timeLine.toString()} секунд"
             }
             override fun onFinish() {
-                binding.countDown.text = "Хана!"
+                if (level >= 1 && exerciseNumber > 1){
+                    exerciseNumber--
+                    positiveScore--
+                    binding.positiveWindow.text = positiveScore.toString()
+                    binding.exerciseNumber.text = exerciseNumber.toString()
+                    countDown(timerLevel)
+                } else if (level > 1 && exerciseNumber == 1){
+                    level--
+                    timerLevel -= 10000
+                    positiveScore = exerciseLimit - 1
+                    binding.positiveWindow.text = positiveScore.toString()
+                    exerciseNumber = exerciseLimit
+                    binding.exerciseNumber.text = exerciseNumber.toString()
+                    initialisation(level)
+                    starsControl(level)
+                    countDown(timerLevel)
+                } else if(level == 1 && exerciseNumber == 1) {
+                    binding.countDown.text = "Время вышло!"
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment()).commit()
+                    binding.startButton.visibility = View.INVISIBLE
+                    binding.returnButton.visibility = View.VISIBLE
+                }
 
             }
 
@@ -93,10 +148,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         var resultControl:Int = binding.answerWindow.text.toString().toInt()
         if (resultControl == result){
             positiveScore++
+            countDown(timerLevel)
             binding.positiveWindow.text = positiveScore.toString()
         } else {
             negativeScore++
             binding.negativeWindow.text = negativeScore.toString()
+            countDown(timerLevel)
         }
 
     }
@@ -106,26 +163,45 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         if (exerciseNumber > exerciseLimit ){
             if (positiveScore >= exerciseLimit - errorNumber){
                 level++
-            } else level--
+                timerLevel +=  10000
+                countDown(timerLevel)
 
-            if (level>0) {
+            } else {
+                level--
+                timerLevel -= 10000
+                countDown(timerLevel)
+            }
 
+            if (level in 1..4) {
                 initialisation(level)
                 exerciseNumber = 1
-                binding.positiveWindow.text = "0"
-                binding.negativeWindow.text = "0"
+                binding.exerciseNumber.text  = exerciseNumber.toString()
                 positiveScore = 0
                 negativeScore = 0
-            } else {
+                binding.positiveWindow.text = positiveScore.toString()
+                binding.negativeWindow.text = negativeScore.toString()
+
+            } else if (level >= 5){
+                supportFragmentManager.beginTransaction().replace(R.id.fragment, WinFragment()).commit()
+                binding.startButton.visibility = View.INVISIBLE
+                binding.returnButton.visibility = View.VISIBLE
+                timer?.cancel()
+                binding.countDown.text = "Ты выиграл!"
+
+            }
+            else if (level <= 0){
                 supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment()).commit()
                 binding.startButton.visibility = View.INVISIBLE
+                binding.returnButton.visibility = View.VISIBLE
                 timer?.cancel()
+                binding.countDown.text = "Ты проиграл!"
+
             }
         } else {
-        binding.exerciseNumber.text = exerciseNumber.toString()
-        starsControl(level)
-        initialisation(level)
+            binding.exerciseNumber.text = exerciseNumber.toString()
+            initialisation(level)
         }
+        starsControl(level)
     }
 
     //Звезды
