@@ -20,8 +20,17 @@ open class DataModel : ViewModel() {
     val timerDelta:MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
-    val exerciseNumber:MutableLiveData<Int> by lazy {
+    val exerciseLimit:MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
+    val timerLimit:MutableLiveData<Long> by lazy {
+        MutableLiveData<Long>()
+    }
+    val levelNumber:MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
+
+
+
 
 }

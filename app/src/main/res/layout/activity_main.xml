@@ -92,6 +92,7 @@
         android:id="@+id/exerciseNumber"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:text="0"
         android:background="@color/numberAsk"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="15dp"
@@ -131,7 +132,7 @@
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-
+        android:text="0"
         android:textSize="@dimen/clock"
         android:gravity="center"
         android:textColor="@color/positiveText"
@@ -140,13 +141,14 @@
         app:layout_constraintStart_toStartOf="@+id/trueWindowHeader"
         app:layout_constraintTop_toBottomOf="@+id/trueWindowHeader" />
 
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/negativeWindow"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/gradient2"
-
+        android:text="0"
         android:textColor="@color/negativeText"
         android:textSize="@dimen/clock"
         android:gravity="center"
@@ -194,7 +196,7 @@
         app:layout_constraintStart_toStartOf="@+id/startButton" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/returnButton"
+        android:id="@+id/startAppButton"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:background="@drawable/gradient_start"
@@ -211,13 +213,8 @@
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toTopOf="@+id/startButton" />
-
-
-
-
-
+        app:layout_constraintTop_toTopOf="@+id/startButton"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

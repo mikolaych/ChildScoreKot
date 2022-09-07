@@ -1,5 +1,7 @@
 package ru.mikolaych.childscorekot
 
+import android.content.Context
+import android.media.MediaPlayer
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,27 +22,50 @@ import ru.mikolaych.childscorekot.viewModel.DataModel
 private var level:Int = 1
 private var result:Int? = null
 private var exerciseNumber:Int = 1
-private var exerciseLimit:Int = 1
+private var exerciseLimit:Int = 10
 private var positiveScore = 0
 private var negativeScore = 0
-private var errorNumber:Int = 1
-private var timerLevel:Long = 10000
+private var levelNumber = 4
+private var errorNumber:Int = 2
+private var timerFirst:Long = 10
+private var timerLevel:Long = timerFirst * 1000
 private var timerDelta:Int = 10
 private var timer: CountDownTimer? = null
+
 
 private var soundStatus:Boolean = true
 private var timerStatus:Boolean = true
 private var multiplyStatus:Boolean = false
 
 
-
 class MainActivity : AppCompatActivity(), RandomNumbers {
     private lateinit var binding: ActivityMainBinding
+
     private val dataModel: DataModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        dataModelInitialisation()
+        startUpp()
+        optionButton()
+        music()
+
+    }
+
+    private fun music(){
+        if (soundStatus) {
+            val mediaPlayerMusic = MediaPlayer.create(this, R.raw.music)
+            mediaPlayerMusic.start()
+            mediaPlayerMusic.isLooping = true
+        }
+    }
+
+    //Передача данных
+    private fun dataModelInitialisation(){
 
         dataModel.soundStatus.observe(this) {
             soundStatus = it
@@ -51,8 +76,8 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         dataModel.multiplyStatus.observe(this) {
             multiplyStatus = it
         }
-        dataModel.exerciseNumber.observe(this){
-            exerciseNumber = it
+        dataModel.exerciseLimit.observe(this){
+            exerciseLimit = it
         }
         dataModel.errorNumber.observe(this){
             errorNumber = it
@@ -60,11 +85,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         dataModel.timerDelta.observe(this){
             timerDelta = it
         }
-
-        startLevel()
-//        restartButton()
-        optionButton()
-
+        dataModel.timerLimit.observe(this){
+            timerFirst = it
+        }
+        dataModel.levelNumber.observe(this){
+            levelNumber = it
+        }
 
 
 
@@ -78,45 +104,21 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         })
     }
 
-    //Рестарт приложения
-    private fun restartButton(){
-        binding.returnButton.setOnClickListener(View.OnClickListener {
+    //Старт приложения
+    private fun startUpp(){
+        binding.startAppButton.setOnClickListener(View.OnClickListener {
+            dataModelInitialisation()
             allClear()
-           /* removeWinFragment()
-            removeWrongFragment()*/
-            binding.returnButton.visibility = View.INVISIBLE
+            startLevel()
+            binding.startAppButton.visibility = View.INVISIBLE
             binding.startButton.visibility = View.VISIBLE
             binding.optionsButton.visibility = View.INVISIBLE
-            startLevel()
+
         })
 
     }
 
-    //закрытие фрагмента при проигрыше
-    private fun removeWrongFragment():Boolean{
-        val fragment = supportFragmentManager.findFragmentByTag("wrong_fragment")
-        fragment?.let {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            transaction.remove(it).commitAllowingStateLoss()
 
-            return true
-        }
-        return false
-    }
-
-    //Закрытие фрагмента при выигрыше
-    private fun removeWinFragment():Boolean{
-        val fragment = supportFragmentManager.findFragmentByTag("win_fragment")
-        fragment?.let {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            transaction.remove(it).commitAllowingStateLoss()
-
-            return true
-        }
-        return false
-    }
 
     //Стирание UI
     private fun allClear(){
@@ -124,7 +126,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
        exerciseNumber = 1
        positiveScore = 0
        negativeScore = 0
-       timerLevel = 10000
+       timerLevel = timerFirst * 1000
         binding.positiveWindow.text = positiveScore.toString()
         binding.negativeWindow.text = positiveScore.toString()
         binding.exerciseNumber.text = exerciseNumber.toString()
@@ -170,6 +172,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                     exerciseNumber++
                     controlAnswer()
                     levelChange()
+
                 }
             })
     }
@@ -186,11 +189,15 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 if (level >= 1 && exerciseNumber > 1){
                     exerciseNumber--
                     positiveScore--
+                    val mediaFalseAnswer = MediaPlayer.create(baseContext, R.raw.false_answer)
+                    mediaFalseAnswer.start()
                     binding.positiveWindow.text = positiveScore.toString()
                     binding.exerciseNumber.text = exerciseNumber.toString()
                     countDown(timerLevel)
                 } else if (level > 1 && exerciseNumber == 1){
                     level--
+                    val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
+                    mediaLevelDown.start()
                     timerLevel -= timerDelta * 1000
                     positiveScore = exerciseLimit - 1
                     binding.positiveWindow.text = positiveScore.toString()
@@ -202,9 +209,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 } else if(level == 1 && exerciseNumber == 1) {
                     binding.countDown.text = "Время вышло!"
                     supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment(), "wrong_fragment").commit()
+                    val mediaWrong = MediaPlayer.create(baseContext, R.raw.wrong)
+                    mediaWrong.start()
                     binding.startButton.visibility = View.INVISIBLE
-                    binding.returnButton.visibility = View.VISIBLE
+                    binding.startAppButton.visibility = View.VISIBLE
                     binding.optionsButton.visibility = View.VISIBLE
+                    allClear()
                 }
             }
         }.start()
@@ -216,9 +226,17 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         if (resultControl == result){
             positiveScore++
             countDown(timerLevel)
+            if (exerciseNumber != exerciseLimit + 1){
+                val mediaTrueAnswer = MediaPlayer.create(baseContext, R.raw.true_answer)
+                mediaTrueAnswer.start()
+            }
             binding.positiveWindow.text = positiveScore.toString()
         } else {
             negativeScore++
+            if (exerciseNumber != exerciseLimit + 1) {
+                val mediaFalseAnswer = MediaPlayer.create(baseContext, R.raw.false_answer)
+                mediaFalseAnswer.start()
+            }
             binding.negativeWindow.text = negativeScore.toString()
             countDown(timerLevel)
         }
@@ -229,16 +247,20 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         if (exerciseNumber > exerciseLimit ){
             if (positiveScore >= exerciseLimit - errorNumber){
                 level++
+                val mediaLevelUp = MediaPlayer.create(baseContext, R.raw.level_up)
+                mediaLevelUp.start()
                 timerLevel +=  timerDelta * 1000
                 countDown(timerLevel)
 
             } else {
                 level--
+                val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
+                mediaLevelDown.start()
                 timerLevel -= timerDelta * 1000
                 countDown(timerLevel)
             }
 
-            if (level in 1..4) {
+            if (level in 1..levelNumber) {
                 initialisation(level)
                 exerciseNumber = 1
                 binding.exerciseNumber.text  = exerciseNumber.toString()
@@ -247,22 +269,28 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 binding.positiveWindow.text = positiveScore.toString()
                 binding.negativeWindow.text = negativeScore.toString()
 
-            } else if (level >= 5){
+            } else if (level >= levelNumber){
                 supportFragmentManager.beginTransaction().replace(R.id.fragment, WinFragment(), "win_fragment").commit()
+                val mediaWin = MediaPlayer.create(baseContext, R.raw.win)
+                mediaWin.start()
                 binding.startButton.visibility = View.INVISIBLE
-                binding.returnButton.visibility = View.VISIBLE
+                binding.startAppButton.visibility = View.VISIBLE
                 binding.optionsButton.visibility = View.VISIBLE
                 timer?.cancel()
                 binding.countDown.text = "Ты выиграл!"
+                allClear()
 
             }
             else if (level <= 0){
                 supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment(), "wrong_fragment").commit()
+                val mediaWrong = MediaPlayer.create(baseContext, R.raw.wrong)
+                mediaWrong.start()
                 binding.startButton.visibility = View.INVISIBLE
-                binding.returnButton.visibility = View.VISIBLE
+                binding.startAppButton.visibility = View.VISIBLE
                 binding.optionsButton.visibility = View.VISIBLE
                 timer?.cancel()
                 binding.countDown.text = "Ты проиграл!"
+                allClear()
 
             }
         } else {

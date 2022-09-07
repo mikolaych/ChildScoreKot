@@ -14,6 +14,7 @@ import ru.mikolaych.childscorekot.viewModel.DataModel
 
 
 class SettingFragment : Fragment() {
+
     private val dataModel : DataModel by activityViewModels()
     private lateinit  var binding: FragmentSettingBinding
 
@@ -23,7 +24,6 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSettingBinding.inflate(layoutInflater, container, false)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -31,23 +31,48 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveButton.setOnClickListener(View.OnClickListener {
-            val exNumber = binding.numberExerciseWindow.text.toString()
-            val erNumber = binding.numberErrorWindow.text.toString()
-            val delTimer = binding.timerDeltaWindow.text.toString()
-            dataModel.exerciseNumber.value = exNumber.toInt()
-            dataModel.errorNumber.value = erNumber.toInt()
-            dataModel.timerDelta.value = delTimer.toInt()
+            if (binding.numberExerciseWindow.text.toString().isEmpty() ||
+                binding.numberErrorWindow.text.toString().isEmpty() ||
+                    binding.timerDeltaWindow.text.toString().isEmpty() ||
+                    binding.timerLimitWindow.text.toString().isEmpty()||
+                    binding.numberLevelWindow.text.toString().isEmpty()){
+                Toast.makeText(context, "Заполните все поля!", Toast.LENGTH_SHORT).show()
+        } else {
+                var soundStat:Boolean = false
+                binding.soundSwitch.setOnCheckedChangeListener{_, isChecked ->
+                    soundStat = true
 
-            Toast.makeText(activity?.applicationContext, "Данные сохранены", Toast.LENGTH_SHORT).show()
 
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            val fragment = activity?.supportFragmentManager?.findFragmentByTag("setting_fragment")
-            fragment?.let {
-                transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                transaction?.remove(it)?.commitAllowingStateLoss()
+                }
+
+                val exNumber = binding.numberExerciseWindow.text.toString()
+                val erNumber = binding.numberErrorWindow.text.toString()
+                val delTimer = binding.timerDeltaWindow.text.toString()
+                val limTimer = binding.timerLimitWindow.text.toString()
+                val limLevel = binding.numberLevelWindow.text.toString()
+                dataModel.exerciseLimit.value = exNumber.toInt()
+                dataModel.errorNumber.value = erNumber.toInt()
+                dataModel.timerLimit.value = limTimer.toLong()
+                dataModel.timerDelta.value = delTimer.toInt()
+                dataModel.levelNumber.value = limLevel.toInt()
+                dataModel.soundStatus.value = soundStat
+
+
+                Toast.makeText(activity?.applicationContext, "Данные сохранены", Toast.LENGTH_SHORT)
+                    .show()
+
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                val fragment =
+                    activity?.supportFragmentManager?.findFragmentByTag("setting_fragment")
+                fragment?.let {
+                    transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    transaction?.remove(it)?.commitAllowingStateLoss()
+                }
             }
 
         })
+
+
     }
 
 

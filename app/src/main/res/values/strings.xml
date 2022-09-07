@@ -25,9 +25,11 @@
     <string name="timerTittle">Таймер</string>
     <string name="soundTittle">Звук</string>
     <string name="multiplyTittle">Умнож/дел</string>
-    <string name="numberExerciseTittle">Примеров на уровне:</string>
-    <string name="numberErrorTittle">Количество ошибок:</string>
-    <string name="timerDeltaTittle">Прирост таймера, сек:</string>
+    <string name="numberExerciseTittle">К-во примеров:</string>
+    <string name="numberErrorTittle">К-во ошибок:</string>
+    <string name="timerDeltaTittle">Таймер+, сек:</string>
     <string name="saveButton">Сохранить</string>
     <string name="newGame">Заново</string>
+    <string name="timerLimitTittle">Таймер, сек</string>
+    <string name="numberLevelTittle">Уровней:</string>
 </resources>

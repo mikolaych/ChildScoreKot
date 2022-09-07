@@ -114,6 +114,31 @@
           android:textColor="@color/negativeWindow"/>
 
       <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/numberLevelTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/numberLevelTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          app:layout_constraintEnd_toStartOf="@+id/numberErrorTittle"
+          app:layout_constraintStart_toEndOf="@+id/numberExerciseTittle"
+          app:layout_constraintTop_toBottomOf="@+id/soundSwitch" />
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/numberLevelWindow"
+          android:layout_width="50dp"
+          android:layout_height="20dp"
+          app:layout_constraintTop_toBottomOf="@+id/numberLevelTittle"
+          app:layout_constraintStart_toStartOf="@+id/numberLevelTittle"
+          app:layout_constraintEnd_toEndOf="@+id/numberLevelTittle"
+          android:background="@color/bottom"
+          android:layout_marginTop="5dp"
+          android:inputType="number"
+          android:textSize="@dimen/startButton"
+          android:gravity="center"
+          android:textColor="@color/negativeWindow"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/numberErrorTittle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -138,16 +163,43 @@
           android:gravity="center"
           android:textColor="@color/negativeWindow"/>
 
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/timerLimitTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/timerLimitTittle"
+          android:textColor="@color/black"
+          android:layout_marginTop="5dp"
+          android:textSize="@dimen/headers"
+          app:layout_constraintEnd_toEndOf="@+id/numberExerciseWindow"
+          app:layout_constraintStart_toStartOf="@+id/numberExerciseWindow"
+          app:layout_constraintTop_toBottomOf="@+id/numberExerciseWindow" />
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/timerLimitWindow"
+          android:layout_width="50dp"
+          android:layout_height="20dp"
+          app:layout_constraintTop_toBottomOf="@+id/timerLimitTittle"
+          app:layout_constraintStart_toStartOf="@+id/timerLimitTittle"
+          app:layout_constraintEnd_toEndOf="@+id/timerLimitTittle"
+          android:background="@color/bottom"
+          android:layout_marginTop="5dp"
+          android:inputType="number"
+          android:textSize="@dimen/startButton"
+          android:gravity="center"
+          android:textColor="@color/negativeWindow"/>
+
       <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/timerDeltaTittle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
           android:text="@string/timerDeltaTittle"
           android:textColor="@color/black"
           android:textSize="@dimen/headers"
-          android:layout_marginTop="5dp"
-          app:layout_constraintStart_toStartOf="@+id/timerSwitch"
-          app:layout_constraintEnd_toEndOf="@+id/timerSwitch"
+          app:layout_constraintEnd_toEndOf="@+id/numberErrorWindow"
+          app:layout_constraintStart_toStartOf="@+id/numberErrorWindow"
           app:layout_constraintTop_toBottomOf="@+id/numberExerciseWindow" />
 
       <androidx.appcompat.widget.AppCompatEditText
@@ -168,13 +220,13 @@
           android:id="@+id/saveButton"
           android:layout_width="wrap_content"
           android:layout_height="30dp"
-          android:text="@string/saveButton"
-          app:layout_constraintTop_toBottomOf="@+id/timerDeltaWindow"
-          app:layout_constraintStart_toStartOf="@+id/timerDeltaWindow"
-          app:layout_constraintEnd_toEndOf="@+id/timerDeltaWindow"
+          android:layout_marginTop="15dp"
           android:background="@drawable/gradient"
           android:padding="5dp"
-          android:layout_marginTop="15dp"/>
+          android:text="@string/saveButton"
+          app:layout_constraintEnd_toEndOf="@+id/timerSwitch"
+          app:layout_constraintStart_toStartOf="@+id/timerSwitch"
+          app:layout_constraintTop_toBottomOf="@+id/timerDeltaWindow" />
 
 
 
