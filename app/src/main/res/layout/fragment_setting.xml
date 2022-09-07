@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.SettingFragment"
+    >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/backgroundBottom">
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/header_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:text="@string/settingsText"
+          android:layout_marginTop="5dp"
+          android:textColor="@color/black"
+          android:background="@drawable/gradient_start"
+          android:textSize="@dimen/startButton"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/timerTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:text="@string/timerTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/header_title" />
+
+      <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/timerSwitch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="@+id/timerTittle"
+          app:layout_constraintStart_toStartOf="@+id/timerTittle"
+          app:layout_constraintTop_toBottomOf="@id/timerTittle"
+          android:checked="true"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/soundTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:text="@string/soundTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          app:layout_constraintEnd_toStartOf="@+id/timerTittle"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/header_title" />
+
+      <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/soundSwitch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="@+id/soundTittle"
+          app:layout_constraintStart_toStartOf="@+id/soundTittle"
+          app:layout_constraintTop_toBottomOf="@id/soundTittle"
+          android:checked="true"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/multiplyTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:text="@string/multiplyTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          app:layout_constraintStart_toEndOf="@+id/timerTittle"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/header_title" />
+
+      <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/multiplySwitch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="@+id/multiplyTittle"
+          app:layout_constraintStart_toStartOf="@+id/multiplyTittle"
+          app:layout_constraintTop_toBottomOf="@id/multiplyTittle"
+          android:checked="false"/>
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/numberExerciseTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/numberExerciseTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          app:layout_constraintStart_toStartOf="@+id/soundSwitch"
+          app:layout_constraintEnd_toEndOf="@+id/soundSwitch"
+          app:layout_constraintTop_toBottomOf="@+id/soundSwitch" />
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/numberExerciseWindow"
+          android:layout_width="50dp"
+          android:layout_height="20dp"
+          app:layout_constraintTop_toBottomOf="@+id/numberExerciseTittle"
+          app:layout_constraintStart_toStartOf="@+id/numberExerciseTittle"
+          app:layout_constraintEnd_toEndOf="@+id/numberExerciseTittle"
+          android:background="@color/bottom"
+          android:layout_marginTop="5dp"
+          android:inputType="number"
+          android:textSize="@dimen/startButton"
+          android:gravity="center"
+          android:textColor="@color/negativeWindow"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/numberErrorTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/numberErrorTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          app:layout_constraintStart_toStartOf="@+id/multiplySwitch"
+          app:layout_constraintEnd_toEndOf="@+id/multiplySwitch"
+          app:layout_constraintTop_toBottomOf="@+id/multiplySwitch" />
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/numberErrorWindow"
+          android:layout_width="50dp"
+          android:layout_height="20dp"
+          app:layout_constraintTop_toBottomOf="@+id/numberErrorTittle"
+          app:layout_constraintStart_toStartOf="@+id/numberErrorTittle"
+          app:layout_constraintEnd_toEndOf="@+id/numberErrorTittle"
+          android:background="@color/bottom"
+          android:layout_marginTop="5dp"
+          android:inputType="number"
+          android:textSize="@dimen/startButton"
+          android:gravity="center"
+          android:textColor="@color/negativeWindow"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/timerDeltaTittle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/timerDeltaTittle"
+          android:textColor="@color/black"
+          android:textSize="@dimen/headers"
+          android:layout_marginTop="5dp"
+          app:layout_constraintStart_toStartOf="@+id/timerSwitch"
+          app:layout_constraintEnd_toEndOf="@+id/timerSwitch"
+          app:layout_constraintTop_toBottomOf="@+id/numberExerciseWindow" />
+
+      <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/timerDeltaWindow"
+          android:layout_width="50dp"
+          android:layout_height="20dp"
+          app:layout_constraintTop_toBottomOf="@+id/timerDeltaTittle"
+          app:layout_constraintStart_toStartOf="@+id/timerDeltaTittle"
+          app:layout_constraintEnd_toEndOf="@+id/timerDeltaTittle"
+          android:background="@color/bottom"
+          android:layout_marginTop="5dp"
+          android:inputType="number"
+          android:textSize="@dimen/startButton"
+          android:gravity="center"
+          android:textColor="@color/negativeWindow"/>
+
+      <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/saveButton"
+          android:layout_width="wrap_content"
+          android:layout_height="30dp"
+          android:text="@string/saveButton"
+          app:layout_constraintTop_toBottomOf="@+id/timerDeltaWindow"
+          app:layout_constraintStart_toStartOf="@+id/timerDeltaWindow"
+          app:layout_constraintEnd_toEndOf="@+id/timerDeltaWindow"
+          android:background="@drawable/gradient"
+          android:padding="5dp"
+          android:layout_marginTop="15dp"/>
+
+
+
+
+
+
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

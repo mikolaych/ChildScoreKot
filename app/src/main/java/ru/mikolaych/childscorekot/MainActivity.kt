@@ -7,47 +7,118 @@ import android.os.CountDownTimer
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModel
 import ru.mikolaych.childscorekot.databinding.ActivityMainBinding
 import ru.mikolaych.childscorekot.features.RandomNumbers
+import ru.mikolaych.childscorekot.screens.PassInputFragment
 import ru.mikolaych.childscorekot.screens.WinFragment
 import ru.mikolaych.childscorekot.screens.WrongFragment
+import ru.mikolaych.childscorekot.viewModel.DataModel
 
 private var level:Int = 1
 private var result:Int? = null
 private var exerciseNumber:Int = 1
-private var exerciseLimit:Int = 5
+private var exerciseLimit:Int = 1
 private var positiveScore = 0
 private var negativeScore = 0
-private var errorNumber = 2
+private var errorNumber:Int = 1
 private var timerLevel:Long = 10000
+private var timerDelta:Int = 10
 private var timer: CountDownTimer? = null
+
+private var soundStatus:Boolean = true
+private var timerStatus:Boolean = true
+private var multiplyStatus:Boolean = false
+
 
 
 class MainActivity : AppCompatActivity(), RandomNumbers {
     private lateinit var binding: ActivityMainBinding
+    private val dataModel: DataModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        dataModel.soundStatus.observe(this) {
+            soundStatus = it
+        }
+        dataModel.timerStatus.observe(this) {
+            timerStatus = it
+        }
+        dataModel.multiplyStatus.observe(this) {
+            multiplyStatus = it
+        }
+        dataModel.exerciseNumber.observe(this){
+            exerciseNumber = it
+        }
+        dataModel.errorNumber.observe(this){
+            errorNumber = it
+        }
+        dataModel.timerDelta.observe(this){
+            timerDelta = it
+        }
+
         startLevel()
-        restartButton()
+//        restartButton()
+        optionButton()
+
+
+
 
     }
+    
+    //Старт опций
+    private fun optionButton(){
+        binding.optionsButton.setOnClickListener(View.OnClickListener {
+            supportFragmentManager.beginTransaction().replace(R.id.fragment, PassInputFragment(), "pass_fragment").commit()
 
+        })
+    }
+
+    //Рестарт приложения
     private fun restartButton(){
         binding.returnButton.setOnClickListener(View.OnClickListener {
-
             allClear()
-            supportFragmentManager.beginTransaction().remove(WrongFragment()).commit()
-            supportFragmentManager.beginTransaction().remove(WinFragment()).commit()
+           /* removeWinFragment()
+            removeWrongFragment()*/
             binding.returnButton.visibility = View.INVISIBLE
             binding.startButton.visibility = View.VISIBLE
+            binding.optionsButton.visibility = View.INVISIBLE
             startLevel()
         })
 
     }
 
+    //закрытие фрагмента при проигрыше
+    private fun removeWrongFragment():Boolean{
+        val fragment = supportFragmentManager.findFragmentByTag("wrong_fragment")
+        fragment?.let {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.remove(it).commitAllowingStateLoss()
+
+            return true
+        }
+        return false
+    }
+
+    //Закрытие фрагмента при выигрыше
+    private fun removeWinFragment():Boolean{
+        val fragment = supportFragmentManager.findFragmentByTag("win_fragment")
+        fragment?.let {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.remove(it).commitAllowingStateLoss()
+
+            return true
+        }
+        return false
+    }
+
+    //Стирание UI
     private fun allClear(){
        level = 1
        exerciseNumber = 1
@@ -61,6 +132,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
     }
 
+    //Запуск
     private fun startLevel() {
         starsControl(level)
         initialisation(level)
@@ -98,12 +170,8 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                     exerciseNumber++
                     controlAnswer()
                     levelChange()
-
-
                 }
-
             })
-
     }
 
     // Таймер
@@ -123,7 +191,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                     countDown(timerLevel)
                 } else if (level > 1 && exerciseNumber == 1){
                     level--
-                    timerLevel -= 10000
+                    timerLevel -= timerDelta * 1000
                     positiveScore = exerciseLimit - 1
                     binding.positiveWindow.text = positiveScore.toString()
                     exerciseNumber = exerciseLimit
@@ -133,13 +201,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                     countDown(timerLevel)
                 } else if(level == 1 && exerciseNumber == 1) {
                     binding.countDown.text = "Время вышло!"
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment(), "wrong_fragment").commit()
                     binding.startButton.visibility = View.INVISIBLE
                     binding.returnButton.visibility = View.VISIBLE
+                    binding.optionsButton.visibility = View.VISIBLE
                 }
-
             }
-
         }.start()
     }
 
@@ -155,7 +222,6 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
             binding.negativeWindow.text = negativeScore.toString()
             countDown(timerLevel)
         }
-
     }
 
     //Контроль уровня
@@ -163,12 +229,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         if (exerciseNumber > exerciseLimit ){
             if (positiveScore >= exerciseLimit - errorNumber){
                 level++
-                timerLevel +=  10000
+                timerLevel +=  timerDelta * 1000
                 countDown(timerLevel)
 
             } else {
                 level--
-                timerLevel -= 10000
+                timerLevel -= timerDelta * 1000
                 countDown(timerLevel)
             }
 
@@ -182,17 +248,19 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 binding.negativeWindow.text = negativeScore.toString()
 
             } else if (level >= 5){
-                supportFragmentManager.beginTransaction().replace(R.id.fragment, WinFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment, WinFragment(), "win_fragment").commit()
                 binding.startButton.visibility = View.INVISIBLE
                 binding.returnButton.visibility = View.VISIBLE
+                binding.optionsButton.visibility = View.VISIBLE
                 timer?.cancel()
                 binding.countDown.text = "Ты выиграл!"
 
             }
             else if (level <= 0){
-                supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment(), "wrong_fragment").commit()
                 binding.startButton.visibility = View.INVISIBLE
                 binding.returnButton.visibility = View.VISIBLE
+                binding.optionsButton.visibility = View.VISIBLE
                 timer?.cancel()
                 binding.countDown.text = "Ты проиграл!"
 

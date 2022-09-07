@@ -10,4 +10,6 @@
     <dimen name="textWinWrong">50sp</dimen>
     <dimen name="WinWrong">50sp</dimen>
     <dimen name="clock">25sp</dimen>
+    <dimen name="headers">14sp</dimen>
+
 </resources>
