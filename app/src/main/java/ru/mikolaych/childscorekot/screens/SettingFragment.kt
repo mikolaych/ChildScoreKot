@@ -38,12 +38,9 @@ class SettingFragment : Fragment() {
                     binding.numberLevelWindow.text.toString().isEmpty()){
                 Toast.makeText(context, "Заполните все поля!", Toast.LENGTH_SHORT).show()
         } else {
-                var soundStat:Boolean = false
-                binding.soundSwitch.setOnCheckedChangeListener{_, isChecked ->
-                    soundStat = true
 
 
-                }
+
 
                 val exNumber = binding.numberExerciseWindow.text.toString()
                 val erNumber = binding.numberErrorWindow.text.toString()
@@ -55,7 +52,12 @@ class SettingFragment : Fragment() {
                 dataModel.timerLimit.value = limTimer.toLong()
                 dataModel.timerDelta.value = delTimer.toInt()
                 dataModel.levelNumber.value = limLevel.toInt()
-                dataModel.soundStatus.value = soundStat
+
+
+
+
+
+
 
 
                 Toast.makeText(activity?.applicationContext, "Данные сохранены", Toast.LENGTH_SHORT)
@@ -71,6 +73,16 @@ class SettingFragment : Fragment() {
             }
 
         })
+
+        binding.timerSwitch.setOnCheckedChangeListener{_, isChecked->
+            var statTimer = isChecked
+            dataModel.timerStatus.value = statTimer
+        }
+
+        binding.multiplySwitch.setOnCheckedChangeListener{_, isChecked->
+            var statMultiply = isChecked
+            dataModel.multiplyStatus.value = statMultiply
+        }
 
 
     }

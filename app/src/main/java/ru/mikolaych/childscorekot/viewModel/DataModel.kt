@@ -5,9 +5,6 @@ import androidx.lifecycle.ViewModel
 
 open class DataModel : ViewModel() {
 
-    val soundStatus:MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
     val timerStatus:MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }

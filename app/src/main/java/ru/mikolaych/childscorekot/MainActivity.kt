@@ -31,11 +31,10 @@ private var timerFirst:Long = 10
 private var timerLevel:Long = timerFirst * 1000
 private var timerDelta:Int = 10
 private var timer: CountDownTimer? = null
-
-
-private var soundStatus:Boolean = true
-private var timerStatus:Boolean = true
+private var timerStatus:Boolean = false
 private var multiplyStatus:Boolean = false
+private var bgMusic: MediaPlayer? = null
+
 
 
 class MainActivity : AppCompatActivity(), RandomNumbers {
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         setContentView(binding.root)
 
 
+
         dataModelInitialisation()
         startUpp()
         optionButton()
@@ -57,19 +57,29 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
     }
 
     private fun music(){
-        if (soundStatus) {
-            val mediaPlayerMusic = MediaPlayer.create(this, R.raw.music)
-            mediaPlayerMusic.start()
-            mediaPlayerMusic.isLooping = true
-        }
+       binding.soundCheck.setOnCheckedChangeListener { _, isChecked ->
+
+           if (bgMusic == null) {
+               bgMusic = MediaPlayer.create(this, R.raw.music)
+               if (isChecked) {
+                   bgMusic?.start()
+                   bgMusic?.isLooping = true
+               }
+
+           } else {
+
+               bgMusic?.stop()
+               bgMusic?.release()
+               bgMusic = null
+           }
+
+
+       }
     }
 
     //Передача данных
     private fun dataModelInitialisation(){
 
-        dataModel.soundStatus.observe(this) {
-            soundStatus = it
-        }
         dataModel.timerStatus.observe(this) {
             timerStatus = it
         }
@@ -90,6 +100,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         }
         dataModel.levelNumber.observe(this){
             levelNumber = it
+        }
+        dataModel.multiplyStatus.observe(this){
+            multiplyStatus = it
+        }
+        dataModel.timerStatus.observe(this){
+            timerStatus = it
         }
 
 
@@ -140,6 +156,8 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         initialisation(level)
         countDown(timerLevel)
         pressStart()
+
+
     }
 
     //Инициализация примера
@@ -147,6 +165,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         binding.answerWindow.text?.clear()
         val first = getNumberLevel(level)
         val second = getNumberLevel(level)
+        if (!multiplyStatus){
         if (first%2 == 0){
             binding.exerciseWindow.text = "$first + $second"
             result = first + second
@@ -158,6 +177,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                binding.exerciseWindow.text = "$second - $first"
                result = second - first
            }
+        }
+        } else {
+            levelNumber = 1
+                binding.exerciseWindow.text = "$first X $second"
+                result = first * second
+
         }
     }
 
@@ -179,6 +204,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
     // Таймер
     private fun countDown(time:Long){
+        if (timerStatus){
         timer?.cancel()
         timer = object: CountDownTimer(time, 1000){
             override fun onTick(p0: Long) {
@@ -218,6 +244,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 }
             }
         }.start()
+        }
     }
 
     //Контроль правильности ответа
@@ -321,6 +348,13 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 binding.levelSuperStar.visibility = View.VISIBLE}
 
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bgMusic?.stop()
+        bgMusic?.release()
+        bgMusic = null
     }
 
 

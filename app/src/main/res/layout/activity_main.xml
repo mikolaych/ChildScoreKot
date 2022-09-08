@@ -96,12 +96,27 @@
         android:background="@color/numberAsk"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/negativeText"
-
         android:gravity="center"
         android:textSize="@dimen/startButton"
         app:layout_constraintTop_toBottomOf="@+id/answerWindow" />
+
+
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/soundCheck"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:button="@drawable/music_selector"
+        android:checked="false"
+        app:layout_constraintBottom_toTopOf="@+id/falseWindowHeader"
+        app:layout_constraintEnd_toEndOf="@+id/exerciseNumber"
+        app:layout_constraintStart_toStartOf="@+id/exerciseNumberHeader"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseNumberHeader" />
+
+
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/trueWindowHeader"

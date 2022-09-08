@@ -28,13 +28,12 @@
           android:id="@+id/timerTittle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
           android:text="@string/timerTittle"
           android:textColor="@color/black"
           android:textSize="@dimen/headers"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/header_title" />
+          app:layout_constraintTop_toBottomOf="@+id/timerLimitWindow" />
 
       <androidx.appcompat.widget.SwitchCompat
           android:id="@+id/timerSwitch"
@@ -43,40 +42,19 @@
           app:layout_constraintEnd_toEndOf="@+id/timerTittle"
           app:layout_constraintStart_toStartOf="@+id/timerTittle"
           app:layout_constraintTop_toBottomOf="@id/timerTittle"
-          android:checked="true"/>
+          android:checked="false"/>
 
-      <androidx.appcompat.widget.AppCompatTextView
-          android:id="@+id/soundTittle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:text="@string/soundTittle"
-          android:textColor="@color/black"
-          android:textSize="@dimen/headers"
-          app:layout_constraintEnd_toStartOf="@+id/timerTittle"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/header_title" />
-
-      <androidx.appcompat.widget.SwitchCompat
-          android:id="@+id/soundSwitch"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:layout_constraintEnd_toEndOf="@+id/soundTittle"
-          app:layout_constraintStart_toStartOf="@+id/soundTittle"
-          app:layout_constraintTop_toBottomOf="@id/soundTittle"
-          android:checked="true"/>
 
       <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/multiplyTittle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
           android:text="@string/multiplyTittle"
           android:textColor="@color/black"
           android:textSize="@dimen/headers"
-          app:layout_constraintStart_toEndOf="@+id/timerTittle"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/header_title" />
+          app:layout_constraintEnd_toEndOf="@+id/timerLimitWindow"
+          app:layout_constraintStart_toStartOf="@+id/timerLimitWindow"
+          app:layout_constraintTop_toBottomOf="@+id/timerLimitWindow" />
 
       <androidx.appcompat.widget.SwitchCompat
           android:id="@+id/multiplySwitch"
@@ -94,10 +72,11 @@
           android:layout_height="wrap_content"
           android:text="@string/numberExerciseTittle"
           android:textColor="@color/black"
+          android:layout_marginTop="10dp"
           android:textSize="@dimen/headers"
-          app:layout_constraintStart_toStartOf="@+id/soundSwitch"
-          app:layout_constraintEnd_toEndOf="@+id/soundSwitch"
-          app:layout_constraintTop_toBottomOf="@+id/soundSwitch" />
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/header_title" />
 
       <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/numberExerciseWindow"
@@ -118,11 +97,12 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/numberLevelTittle"
+          android:layout_marginTop="10dp"
           android:textColor="@color/black"
           android:textSize="@dimen/headers"
-          app:layout_constraintEnd_toStartOf="@+id/numberErrorTittle"
-          app:layout_constraintStart_toEndOf="@+id/numberExerciseTittle"
-          app:layout_constraintTop_toBottomOf="@+id/soundSwitch" />
+          app:layout_constraintEnd_toStartOf="@+id/timerTittle"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/header_title" />
 
       <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/numberLevelWindow"
@@ -142,12 +122,13 @@
           android:id="@+id/numberErrorTittle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
           android:text="@string/numberErrorTittle"
           android:textColor="@color/black"
           android:textSize="@dimen/headers"
-          app:layout_constraintStart_toStartOf="@+id/multiplySwitch"
-          app:layout_constraintEnd_toEndOf="@+id/multiplySwitch"
-          app:layout_constraintTop_toBottomOf="@+id/multiplySwitch" />
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/numberExerciseTittle"
+          app:layout_constraintTop_toBottomOf="@+id/header_title" />
 
       <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/numberErrorWindow"
@@ -170,11 +151,11 @@
           android:layout_height="wrap_content"
           android:text="@string/timerLimitTittle"
           android:textColor="@color/black"
-          android:layout_marginTop="5dp"
+          android:layout_marginTop="10dp"
           android:textSize="@dimen/headers"
-          app:layout_constraintEnd_toEndOf="@+id/numberExerciseWindow"
-          app:layout_constraintStart_toStartOf="@+id/numberExerciseWindow"
-          app:layout_constraintTop_toBottomOf="@+id/numberExerciseWindow" />
+          app:layout_constraintEnd_toEndOf="@+id/numberLevelWindow"
+          app:layout_constraintStart_toStartOf="@+id/numberLevelWindow"
+          app:layout_constraintTop_toBottomOf="@+id/numberLevelWindow" />
 
       <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/timerLimitWindow"
@@ -194,12 +175,12 @@
           android:id="@+id/timerDeltaTittle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
           android:text="@string/timerDeltaTittle"
+          android:layout_marginTop="10dp"
           android:textColor="@color/black"
           android:textSize="@dimen/headers"
-          app:layout_constraintEnd_toEndOf="@+id/numberErrorWindow"
-          app:layout_constraintStart_toStartOf="@+id/numberErrorWindow"
+          app:layout_constraintEnd_toEndOf="@+id/numberExerciseWindow"
+          app:layout_constraintStart_toStartOf="@+id/numberExerciseWindow"
           app:layout_constraintTop_toBottomOf="@+id/numberExerciseWindow" />
 
       <androidx.appcompat.widget.AppCompatEditText
@@ -220,13 +201,12 @@
           android:id="@+id/saveButton"
           android:layout_width="wrap_content"
           android:layout_height="30dp"
-          android:layout_marginTop="15dp"
           android:background="@drawable/gradient"
           android:padding="5dp"
           android:text="@string/saveButton"
           app:layout_constraintEnd_toEndOf="@+id/timerSwitch"
           app:layout_constraintStart_toStartOf="@+id/timerSwitch"
-          app:layout_constraintTop_toBottomOf="@+id/timerDeltaWindow" />
+          app:layout_constraintTop_toBottomOf="@+id/timerSwitch" />
 
 
 
