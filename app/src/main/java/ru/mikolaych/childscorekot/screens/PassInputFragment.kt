@@ -29,9 +29,9 @@ class PassInputFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val a:Int = (1..9).random()
-        val b:Int = (1..9).random()
-        val c:Int = (1..9).random()
+        val a = rand(0, 9)
+        val b = rand(0, 9)
+        val c = rand(0, 9)
         var d = a + b * c
         binding.example.text = "$a + $b * $c"
 
@@ -56,6 +56,13 @@ class PassInputFragment : Fragment() {
             }
         })
     }
+
+    fun rand(start: Int, end: Int): Int {
+        require(start <= end) { "Illegal Argument" }
+        return (start..end).shuffled().first()
+    }
+
+
 
 
 
