@@ -10,16 +10,19 @@
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/mult.xml" value="0.332" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/music.xml" value="0.332" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/music_on.xml" value="0.332" />
-        <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/music_selector.xml" value="0.2365" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/options.xml" value="0.332" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/raiting_bar.xml" value="0.332" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/star.xml" value="0.332" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/drawable/support.xml" value="0.332" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/layout/fragment.xml" value="0.5541666666666667" />
-        <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/layout/fragment_setting.xml" value="0.5541666666666667" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/layout/fragment_win.xml" value="0.5541666666666667" />
         <entry key="..\:/Info/comp/programming/Projects/ChildScoreKot/app/src/main/res/layout/fragment_wrong.xml" value="0.5541666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_pass_input.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_win.xml" value="0.1953125" />
+        <entry key="app/src/main/res/layout/fragment_wrong.xml" value="0.1953125" />
       </map>
     </option>
   </component>

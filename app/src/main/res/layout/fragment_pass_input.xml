@@ -8,7 +8,7 @@
     android:background="@color/backgroundBottom">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="150dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
@@ -17,9 +17,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textPass"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="30dp"
-            android:text="Введи код:"
+            android:text="@string/passTittle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,17 +28,31 @@
             android:textSize="@dimen/startButton"
             android:textColor="@color/black"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/example"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/textPass"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/startButton"
+            android:background="@color/answerText"
+            android:textColor="@color/negativeWindow"/>
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/inputPassWindow"
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:textSize="@dimen/clock"
             android:gravity="center"
+            android:layout_marginTop="5dp"
             android:background="@color/bottom"
             android:inputType="numberPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textPass" />
+            app:layout_constraintTop_toBottomOf="@id/example" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/confirmButton"

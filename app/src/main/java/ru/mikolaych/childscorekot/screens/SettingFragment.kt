@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.slider.Slider
 import ru.mikolaych.childscorekot.R
 import ru.mikolaych.childscorekot.databinding.FragmentSettingBinding
 import ru.mikolaych.childscorekot.viewModel.DataModel
+import java.util.*
+import kotlin.math.roundToInt
 
 
 class SettingFragment : Fragment() {
@@ -22,7 +25,7 @@ class SettingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -31,57 +34,68 @@ class SettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveButton.setOnClickListener(View.OnClickListener {
-            if (binding.numberExerciseWindow.text.toString().isEmpty() ||
-                binding.numberErrorWindow.text.toString().isEmpty() ||
-                    binding.timerDeltaWindow.text.toString().isEmpty() ||
-                    binding.timerLimitWindow.text.toString().isEmpty()||
-                    binding.numberLevelWindow.text.toString().isEmpty()){
-                Toast.makeText(context, "Заполните все поля!", Toast.LENGTH_SHORT).show()
-        } else {
-
-
-
-
-                val exNumber = binding.numberExerciseWindow.text.toString()
-                val erNumber = binding.numberErrorWindow.text.toString()
+            if (binding.timerDeltaWindow.text.toString().isEmpty()){
+                dataModel.timerDelta.value = 10
+            } else if (binding.timerLimitWindow.text.toString().isEmpty()){
+                dataModel.timerLimit.value = 10
+            } else {
                 val delTimer = binding.timerDeltaWindow.text.toString()
                 val limTimer = binding.timerLimitWindow.text.toString()
-                val limLevel = binding.numberLevelWindow.text.toString()
-                dataModel.exerciseLimit.value = exNumber.toInt()
-                dataModel.errorNumber.value = erNumber.toInt()
                 dataModel.timerLimit.value = limTimer.toLong()
                 dataModel.timerDelta.value = delTimer.toInt()
-                dataModel.levelNumber.value = limLevel.toInt()
 
-
-
-
-
-
-
-
-                Toast.makeText(activity?.applicationContext, "Данные сохранены", Toast.LENGTH_SHORT)
-                    .show()
-
-                val transaction = activity?.supportFragmentManager?.beginTransaction()
-                val fragment =
-                    activity?.supportFragmentManager?.findFragmentByTag("setting_fragment")
-                fragment?.let {
-                    transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    transaction?.remove(it)?.commitAllowingStateLoss()
-                }
+            }
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            val fragment =
+                activity?.supportFragmentManager?.findFragmentByTag("setting_fragment")
+            fragment?.let {
+                transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                transaction?.remove(it)?.commitAllowingStateLoss()
             }
 
         })
 
-        binding.timerSwitch.setOnCheckedChangeListener{_, isChecked->
-            var statTimer = isChecked
-            dataModel.timerStatus.value = statTimer
+
+        binding.numberLevelSlider.addOnChangeListener{slider, value, fromUser ->
+            var n:String = "уровень"
+            when(value.roundToInt()){
+                1 -> n = "уровень"
+                else -> n = "уровня"
+            }
+            binding.numberLevelTittleSlider.text = "${value.roundToInt()} $n"
+            dataModel.levelNumber.value = value.roundToInt()
         }
 
+        binding.numberExerciseSlider.addOnChangeListener{slider, value, fromUser ->
+            binding.numberExerciseTittleSlider.text = "${value.roundToInt()} примеров"
+            dataModel.exerciseLimit.value = value.roundToInt()
+        }
+
+        binding.numberErrorSlider.addOnChangeListener{slider, value, fromUser ->
+            var n:String = "ошибка"
+            when(value.roundToInt()){
+                1 -> n = "ошибка"
+                in 2..4 -> n = "ошибки"
+                5 -> n = "ошибок"
+            }
+            binding.numberErrorTittleSlider.text = "${value.roundToInt()} $n"
+            dataModel.errorNumber.value = value.roundToInt()
+        }
+
+
+        binding.timerSwitch.setOnCheckedChangeListener{_, isChecked->
+            dataModel.timerStatus.value = isChecked
+        }
         binding.multiplySwitch.setOnCheckedChangeListener{_, isChecked->
-            var statMultiply = isChecked
-            dataModel.multiplyStatus.value = statMultiply
+            if (isChecked){
+                dataModel.multiplyStatus.value = true
+                binding.numberLevelSlider.value = 1f
+                binding.numberLevelSlider.visibility = View.INVISIBLE
+            } else {
+                dataModel.multiplyStatus.value = false
+                binding.numberLevelSlider.visibility = View.VISIBLE
+            }
+
         }
 
 

@@ -22,11 +22,11 @@ import ru.mikolaych.childscorekot.viewModel.DataModel
 private var level:Int = 1
 private var result:Int? = null
 private var exerciseNumber:Int = 1
-private var exerciseLimit:Int = 10
+private var exerciseLimit:Int = 5
 private var positiveScore = 0
 private var negativeScore = 0
-private var levelNumber = 4
-private var errorNumber:Int = 2
+private var levelNumber = 1
+private var errorNumber:Int = 1
 private var timerFirst:Long = 10
 private var timerLevel:Long = timerFirst * 1000
 private var timerDelta:Int = 10
@@ -157,7 +157,6 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         countDown(timerLevel)
         pressStart()
 
-
     }
 
     //Инициализация примера
@@ -244,7 +243,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 }
             }
         }.start()
-        }
+        } else binding.countDown.text = ""
     }
 
     //Контроль правильности ответа
@@ -275,14 +274,18 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
             if (positiveScore >= exerciseLimit - errorNumber){
                 level++
                 val mediaLevelUp = MediaPlayer.create(baseContext, R.raw.level_up)
-                mediaLevelUp.start()
+                if (level < levelNumber) {
+                    mediaLevelUp.start()
+                }
                 timerLevel +=  timerDelta * 1000
                 countDown(timerLevel)
 
             } else {
                 level--
                 val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
-                mediaLevelDown.start()
+                if (level > 0){
+                    mediaLevelDown.start()
+                }
                 timerLevel -= timerDelta * 1000
                 countDown(timerLevel)
             }
