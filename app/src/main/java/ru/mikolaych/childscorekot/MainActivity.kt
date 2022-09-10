@@ -203,6 +203,9 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
     // Таймер
     private fun countDown(time:Long){
+        val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
+        val mediaWrong = MediaPlayer.create(baseContext, R.raw.wrong)
+        val mediaFalseAnswer = MediaPlayer.create(baseContext, R.raw.false_answer)
         if (timerStatus){
         timer?.cancel()
         timer = object: CountDownTimer(time, 1000){
@@ -212,16 +215,23 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
             }
             override fun onFinish() {
                 if (level >= 1 && exerciseNumber > 1){
+                    if (mediaFalseAnswer.isPlaying){
+                        mediaFalseAnswer.stop()
+                        mediaFalseAnswer.release()
+                    }
                     exerciseNumber--
                     positiveScore--
-                    val mediaFalseAnswer = MediaPlayer.create(baseContext, R.raw.false_answer)
+
                     mediaFalseAnswer.start()
                     binding.positiveWindow.text = positiveScore.toString()
                     binding.exerciseNumber.text = exerciseNumber.toString()
                     countDown(timerLevel)
                 } else if (level > 1 && exerciseNumber == 1){
+                    if (mediaLevelDown.isPlaying){
+                        mediaLevelDown.stop()
+                        mediaLevelDown.release()
+                    }
                     level--
-                    val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
                     mediaLevelDown.start()
                     timerLevel -= timerDelta * 1000
                     positiveScore = exerciseLimit - 1
@@ -233,8 +243,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                     countDown(timerLevel)
                 } else if(level == 1 && exerciseNumber == 1) {
                     binding.countDown.text = "Время вышло!"
+                    if (mediaWrong.isPlaying){
+                        mediaWrong.stop()
+                        mediaWrong.release()
+                    }
                     supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment(), "wrong_fragment").commit()
-                    val mediaWrong = MediaPlayer.create(baseContext, R.raw.wrong)
+
                     mediaWrong.start()
                     binding.startButton.visibility = View.INVISIBLE
                     binding.startAppButton.visibility = View.VISIBLE
@@ -248,19 +262,23 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
     //Контроль правильности ответа
     private fun controlAnswer(){
+        val mediaTrueAnswer = MediaPlayer.create(baseContext, R.raw.true_answer)
+        val mediaFalseAnswer = MediaPlayer.create(baseContext, R.raw.false_answer)
         var resultControl:Int = binding.answerWindow.text.toString().toInt()
         if (resultControl == result){
+            if (mediaTrueAnswer.isPlaying){
+                mediaTrueAnswer.stop()
+                mediaTrueAnswer.release()
+            }
             positiveScore++
             countDown(timerLevel)
             if (exerciseNumber != exerciseLimit + 1){
-                val mediaTrueAnswer = MediaPlayer.create(baseContext, R.raw.true_answer)
                 mediaTrueAnswer.start()
             }
             binding.positiveWindow.text = positiveScore.toString()
         } else {
             negativeScore++
             if (exerciseNumber != exerciseLimit + 1) {
-                val mediaFalseAnswer = MediaPlayer.create(baseContext, R.raw.false_answer)
                 mediaFalseAnswer.start()
             }
             binding.negativeWindow.text = negativeScore.toString()
@@ -270,10 +288,18 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
     //Контроль уровня
     private fun levelChange(){
+        val mediaLevelUp = MediaPlayer.create(baseContext, R.raw.level_up)
+        val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
+        val mediaWin = MediaPlayer.create(baseContext, R.raw.win)
+        val mediaWrong = MediaPlayer.create(baseContext, R.raw.wrong)
         if (exerciseNumber > exerciseLimit ){
             if (positiveScore >= exerciseLimit - errorNumber){
+                if (mediaLevelUp.isPlaying){
+                    mediaLevelUp.stop()
+                    mediaLevelUp.release()
+                }
                 level++
-                val mediaLevelUp = MediaPlayer.create(baseContext, R.raw.level_up)
+
                 if (level < levelNumber) {
                     mediaLevelUp.start()
                 }
@@ -281,8 +307,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 countDown(timerLevel)
 
             } else {
+                if (mediaLevelDown.isPlaying){
+                    mediaLevelDown.stop()
+                    mediaLevelDown.release()
+                }
                 level--
-                val mediaLevelDown = MediaPlayer.create(baseContext, R.raw.level_down)
+
                 if (level > 0){
                     mediaLevelDown.start()
                 }
@@ -300,8 +330,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
                 binding.negativeWindow.text = negativeScore.toString()
 
             } else if (level >= levelNumber){
+                if (mediaWin.isPlaying){
+                    mediaWin.stop()
+                    mediaWin.release()
+                }
                 supportFragmentManager.beginTransaction().replace(R.id.fragment, WinFragment(), "win_fragment").commit()
-                val mediaWin = MediaPlayer.create(baseContext, R.raw.win)
+
                 mediaWin.start()
                 binding.startButton.visibility = View.INVISIBLE
                 binding.startAppButton.visibility = View.VISIBLE
@@ -312,8 +346,12 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
 
             }
             else if (level <= 0){
+                if (mediaWrong.isPlaying){
+                    mediaWrong.stop()
+                    mediaWrong.release()
+                }
                 supportFragmentManager.beginTransaction().replace(R.id.fragment, WrongFragment(), "wrong_fragment").commit()
-                val mediaWrong = MediaPlayer.create(baseContext, R.raw.wrong)
+
                 mediaWrong.start()
                 binding.startButton.visibility = View.INVISIBLE
                 binding.startAppButton.visibility = View.VISIBLE
@@ -358,6 +396,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         bgMusic?.stop()
         bgMusic?.release()
         bgMusic = null
+
     }
 
 
