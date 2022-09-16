@@ -37,6 +37,7 @@ private var bgMusic: MediaPlayer? = null
 
 
 
+
 class MainActivity : AppCompatActivity(), RandomNumbers {
     private lateinit var binding: ActivityMainBinding
 
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
         setContentView(binding.root)
 
 
-
+        binding.startAppButton.visibility = View.INVISIBLE
         dataModelInitialisation()
         startUpp()
         optionButton()
@@ -108,14 +109,16 @@ class MainActivity : AppCompatActivity(), RandomNumbers {
             timerStatus = it
         }
 
-
-
     }
     
     //Старт опций
     private fun optionButton(){
+
+
+
         binding.optionsButton.setOnClickListener(View.OnClickListener {
             supportFragmentManager.beginTransaction().replace(R.id.fragment, PassInputFragment(), "pass_fragment").commit()
+            binding.startAppButton.visibility = View.VISIBLE
 
         })
     }

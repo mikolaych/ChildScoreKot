@@ -33,4 +33,5 @@
     <string name="timerLimitTittle">Таймер, сек</string>
     <string name="numberLevelTittle">Число уровней:</string>
     <string name="passTittle">Реши пример:</string>
+    <string name="optionsButton">Сначала настрой</string>
 </resources>

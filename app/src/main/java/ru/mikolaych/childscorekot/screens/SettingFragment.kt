@@ -53,6 +53,7 @@ class SettingFragment : Fragment() {
                 transaction?.remove(it)?.commitAllowingStateLoss()
             }
 
+
         })
 
 
